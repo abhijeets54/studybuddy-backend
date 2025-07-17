@@ -27,6 +27,7 @@
      - **Build Command**: `./build.sh`
      - **Start Command**: `gunicorn studybuddy.wsgi:application`
      - **Plan**: Free
+     - **Advanced**: Set Python Version to `3.11.9` (if available)
 
 4. **Set Environment Variables**
    Add these in the "Environment" section:
@@ -83,19 +84,26 @@
 
 ### Common Issues:
 
-1. **Build Fails**
+1. **Pillow Build Error (KeyError: '__version__')**
+   - **Problem**: Python 3.13 compatibility issue with Pillow 10.2.0
+   - **Solution**: Use Python 3.11.9 (already set in `runtime.txt`)
+   - **Alternative**: Update Pillow to 10.4.0+ (already done in `requirements.txt`)
+
+2. **Build Fails**
    - Check build logs in Render dashboard
    - Ensure all dependencies are in `requirements.txt`
+   - Try clearing build cache in Render dashboard
 
-2. **Database Connection Error**
+3. **Database Connection Error**
    - Verify `DATABASE_URL` is correctly set
    - Ensure PostgreSQL database is created and running
+   - Use Internal Database URL, not External
 
-3. **Static Files Not Loading**
+4. **Static Files Not Loading**
    - Verify `whitenoise` is in `requirements.txt`
    - Check `STATIC_ROOT` and `STATICFILES_STORAGE` settings
 
-4. **CORS Errors**
+5. **CORS Errors**
    - Update `CORS_ALLOWED_ORIGINS` with your frontend domain
    - Ensure frontend is using HTTPS in production
 
