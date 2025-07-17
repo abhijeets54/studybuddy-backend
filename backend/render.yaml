@@ -1,0 +1,28 @@
+databases:
+  - name: studybuddy-db
+    databaseName: studybuddy_db
+    user: studybuddy_user
+    plan: free
+
+services:
+  - type: web
+    name: studybuddy-backend
+    runtime: python3
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn studybuddy.wsgi:application"
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: studybuddy-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: False
+      - key: ALLOWED_HOSTS
+        value: "*"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://your-frontend-domain.com"
+      - key: GEMINI_API_KEY
+        sync: false  # You'll need to set this manually in Render dashboard
