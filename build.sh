@@ -4,9 +4,10 @@ set -o errexit
 
 echo "Starting build process..."
 
-# Upgrade pip to latest version
-echo "Upgrading pip..."
+# Upgrade pip and setuptools to fix pkg_resources issue
+echo "Upgrading pip and setuptools..."
 pip install --upgrade pip
+pip install --force-reinstall -U setuptools
 
 # Install dependencies
 echo "Installing Python dependencies..."
